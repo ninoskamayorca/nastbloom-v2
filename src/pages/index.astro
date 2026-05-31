@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Process from '../components/Process.astro';
+import Marquee from '../components/Marquee.astro';
+import Gallery from '../components/Gallery.astro';
+import Products from '../components/Products.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Care from '../components/Care.astro';
+import Shipping from '../components/Shipping.astro';
+import FAQ from '../components/FAQ.astro';
+import Policies from '../components/Policies.astro';
+import Contact from '../components/Contact.astro';
+import { getCollection } from 'astro:content';
+import settings from '../content/settings/general.json';
+
+const allProducts = (await getCollection('products'))
+  .filter((p: any) => p.data.inStock)
+  .sort((a: any, b: any) => a.data.order - b.data.order);
+
+const galleryItems = (await getCollection('gallery'))
+  .sort((a: any, b: any) => a.data.order - b.data.order);
+
+const testimonials = (await getCollection('testimonials'))
+  .sort((a: any, b: any) => a.data.order - b.data.order);
+
+const faqItems = (await getCollection('faq'))
+  .sort((a: any, b: any) => a.data.order - b.data.order);
+---
+<BaseLayout title="Nast Bloom – Flower Preservation">
+  <Hero
+    headline={settings.heroHeadline}
+    subtext={settings.heroSubtext}
+    heroImage={settings.heroImage}
+  />
+  <Marquee />
+  <About />
+  <Process />
+  <Gallery items={galleryItems} />
+  <Products products={allProducts} />
+  <Testimonials items={testimonials} />
+  <Care />
+  <Shipping />
+  <FAQ items={faqItems} />
+  <Policies />
+  <Contact
+    email={settings.email}
+    phone={settings.phone}
+    formspreeId={settings.formspreeId}
+  />
+</BaseLayout>

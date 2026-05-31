@@ -1,0 +1,95 @@
+---
+// No props — about content is static / editable via Settings in future
+---
+<section id="about" class="grid grid-cols-1 lg:grid-cols-2 min-h-[85vh]">
+  <!-- Image panel -->
+  <div class="bg-sage-faint flex items-center justify-center p-20 relative overflow-hidden hidden lg:flex">
+    <div class="absolute inset-10 border border-sage-line pointer-events-none"></div>
+    <div class="w-full max-w-[300px] aspect-[3/4] bg-linen relative z-10 shadow-[0_4px_32px_rgba(100,140,90,0.1)] overflow-hidden group cursor-pointer" id="aboutPortrait">
+      <div class="about-portrait-slot w-full h-full flex flex-col items-center justify-center gap-3">
+        <span class="text-5xl opacity-25">🌸</span>
+        <label for="aboutImgInput" class="text-[0.7rem] tracking-widest uppercase text-faint cursor-pointer hover:text-sage transition-colors">Add your photo</label>
+      </div>
+      <label for="aboutImgInput" class="absolute bottom-3 right-3 bg-linen/92 border border-black/15 text-soft text-[0.62rem] tracking-widest uppercase px-2.5 py-1 cursor-pointer hover:bg-sage hover:text-white hover:border-sage transition-all opacity-0 group-hover:opacity-100 z-10">
+        Change photo
+      </label>
+      <input type="file" accept="image/*" id="aboutImgInput" class="hidden" />
+    </div>
+  </div>
+
+  <!-- Text panel -->
+  <div class="bg-linen flex flex-col justify-center px-12 lg:px-20 py-24">
+    <div class="section-label">About Nast Bloom</div>
+    <h2 class="font-serif text-4xl lg:text-5xl font-light text-deep mb-4">Preserving memories<br/>in the most beautiful way.</h2>
+    <p class="font-serif italic text-sage text-xl leading-relaxed mb-7 font-light">
+      "Some dreams don't arrive all at once… they grow quietly within you until one day, you're ready to let them bloom."
+    </p>
+    <p class="text-[0.96rem] text-mid leading-loose font-light mb-4">
+      I'm a mom of two, and for 16 years I built a life in the corporate world — one that gave me stability, growth, and success. But deep down, I knew I wanted something more… more time, more meaning, more joy in the everyday moments.
+    </p>
+    <p class="text-[0.96rem] text-mid leading-loose font-light mb-4">So I chose to begin again. Nast Bloom is more than a business — it's a piece of my heart.</p>
+
+    <div class="bg-sage-faint border-l-2 border-sage-light p-6 mt-2">
+      <p class="text-[0.9rem] text-mid leading-loose font-light">
+        <strong class="font-medium text-deep">"Nast"</strong> represents my family: Nina, Alfredo, Sara, and Thomas — the reason behind every late night, every idea, every step forward.
+      </p>
+      <p class="text-[0.9rem] text-mid leading-loose font-light mt-3">
+        <strong class="font-medium text-deep">"Bloom"</strong> is growth, beauty, and the courage to start something new, even when it feels uncertain.
+      </p>
+    </div>
+
+    <p class="text-[0.96rem] text-mid leading-loose font-light mt-5">This is where my passion meets purpose… and this is only the beginning.</p>
+    <p class="font-serif italic text-sage mt-4">— with love, the Nast Bloom family ✦</p>
+
+    <div class="mt-7 pt-6 border-t border-black/10 flex flex-col gap-3">
+      {[
+        'Museum-grade, UV-resistant resin formula',
+        'Each piece hand-poured and hand-finished',
+        'Design approval before any resin is poured',
+        'Wedding specialists — we work with your florist',
+        'Custom shapes, sizes & display formats available',
+      ].map(item => (
+        <div class="flex items-center gap-4 text-[0.9rem] text-mid">
+          <span class="w-1.5 h-1.5 bg-sage rounded-full flex-shrink-0"></span>
+          {item}
+        </div>
+      ))}
+    </div>
+
+    <a href="#contact" class="btn-primary mt-8 self-start">Our Story →</a>
+  </div>
+</section>
+
+<script>
+  const aboutInput = document.getElementById('aboutImgInput') as HTMLInputElement;
+  if (aboutInput) {
+    const saved = localStorage.getItem('nb_aboutImg');
+    if (saved) applyAboutImg(saved);
+
+    aboutInput.addEventListener('change', function() {
+      const f = this.files?.[0]; if (!f) return;
+      const r = new FileReader();
+      r.onload = e => {
+        const src = e.target?.result as string;
+        try { localStorage.setItem('nb_aboutImg', src); } catch(err) {}
+        applyAboutImg(src);
+        window.showToast?.('📷 Photo saved!');
+      };
+      r.readAsDataURL(f);
+    });
+  }
+
+  function applyAboutImg(src: string) {
+    const portrait = document.getElementById('aboutPortrait');
+    if (!portrait) return;
+    const slot = portrait.querySelector('.about-portrait-slot') as HTMLElement;
+    if (slot) slot.style.display = 'none';
+    let img = portrait.querySelector('img.preview') as HTMLImageElement;
+    if (!img) {
+      img = document.createElement('img');
+      img.className = 'preview absolute inset-0 w-full h-full object-cover';
+      portrait.prepend(img);
+    }
+    img.src = src;
+  }
+</script>

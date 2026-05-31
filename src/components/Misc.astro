@@ -1,0 +1,109 @@
+---
+// Shipping, Care, Policies, Marquee — all lightweight static sections
+---
+<!-- MARQUEE -->
+<div class="bg-sage py-3.5 overflow-hidden whitespace-nowrap">
+  <div class="marquee-track inline-block">
+    {[
+      'Wedding Bouquet Preservation','Resin Art','Pressed Flower Frames','Botanical Jewelry',
+      'Custom Commissions','Gift Sets','Free Consultation','Ships Nationwide',
+      'Wedding Bouquet Preservation','Resin Art','Pressed Flower Frames','Botanical Jewelry',
+      'Custom Commissions','Gift Sets','Free Consultation','Ships Nationwide',
+    ].map((item, i) => (
+      <span class:list={['mx-10 text-[0.76rem] tracking-[0.2em] uppercase text-white/70', i % 2 === 1 ? '' : '']}>
+        {i % 2 === 0 ? item : <><span class="mx-4 text-white/40 text-[0.45rem] align-middle">◆</span>{item}</>}
+      </span>
+    ))}
+  </div>
+</div>
+
+<!-- CARE -->
+<section id="care" class="bg-linen py-20 px-12 lg:px-20">
+  <div class="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
+    {[
+      { label:'Before You Ship', title:'Caring for Your Flowers', items:[
+        ['On the day of your event',       'Handle gently — avoid touching petals and don\'t toss the bouquet if possible.'],
+        ['Do NOT refrigerate or freeze',   'Cold temperatures cause rapid wilting and mold, making preservation impossible.'],
+        ['Keep in fresh water',            'Place stems in water overnight and ship within 4 days of the event.'],
+        ['Already dried flowers?',         'No problem — we preserve previously dried flowers too. Just ensure no mold is present.'],
+      ]},
+      { label:'After Delivery', title:'Caring for Your Resin Piece', items:[
+        ['Wipe with a soft, dry cloth',    'Avoid abrasive cleaners or paper towels which can scratch the resin surface.'],
+        ['Limit direct sunlight',          'Our UV-resistant formula extends vibrancy — but avoid prolonged sun exposure.'],
+        ['Keep away from heat sources',    'Avoid placing near radiators, fireplaces, or in a hot car for extended periods.'],
+        ['Display with pride',             'Your piece is designed to last a lifetime — enjoy it as the heirloom it is.'],
+      ]},
+    ].map(col => (
+      <div>
+        <div class="section-label">{col.label}</div>
+        <h3 class="font-serif text-2xl font-normal text-deep mb-7 pb-4 border-b border-sage/20">{col.title}</h3>
+        {col.items.map(([strong, text]) => (
+          <div class="flex gap-4 mb-5">
+            <span class="text-sage text-[0.85rem] flex-shrink-0 mt-0.5">✦</span>
+            <div class="text-[0.9rem] text-mid font-light leading-loose">
+              <strong class="font-medium text-deep block mb-0.5">{strong}</strong>
+              {text}
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- SHIPPING -->
+<section id="shipping" class="bg-cream-dark py-24 px-12 lg:px-20">
+  <div class="section-label">Shipping</div>
+  <h2 class="font-serif text-4xl font-light text-deep mb-4">Sending Your Flowers</h2>
+  <p class="text-[0.95rem] text-mid font-light leading-relaxed max-w-xl mb-12">Getting your flowers to us in perfect condition is the most important step. Follow these guidelines and your blooms will arrive ready to preserve.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 border border-black/10 mb-4">
+    {[
+      { icon:'📦', title:'Packaging', items:['Wrap stems in damp paper towel','Seal in a zip-lock bag to retain moisture','Wrap bouquet in tissue paper','Use a sturdy box with padding on all sides','Include your name and order number'] },
+      { icon:'🚚', title:'Shipping Methods', items:['Overnight or 2-day shipping strongly recommended','USPS Priority, FedEx, or UPS all accepted','Ship Monday–Wednesday to avoid weekends','Local drop-off available in Oviedo, FL'] },
+      { icon:'📅', title:'Timing', items:['Ship within 4 days of your event','The fresher your flowers arrive, the better','We begin drying immediately upon receipt'] },
+    ].map(card => (
+      <div class="bg-linen p-8">
+        <div class="text-2xl mb-4">{card.icon}</div>
+        <h4 class="font-serif text-xl font-normal text-deep mb-4">{card.title}</h4>
+        <ul class="list-none flex flex-col gap-2">
+          {card.items.map(item => (
+            <li class="flex gap-3 text-[0.88rem] text-mid font-light leading-relaxed">
+              <span class="text-sage/70 flex-shrink-0">—</span>{item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <div class="border border-sage/20 bg-sage-faint p-6 flex gap-4 items-start">
+    <span class="text-lg flex-shrink-0">⚠</span>
+    <p class="text-[0.88rem] text-mid font-light leading-relaxed">
+      <strong class="font-medium text-deep">Important:</strong> Do not refrigerate or freeze your flowers. Cold storage causes accelerated wilting and mold. Keep blooms at room temperature in water until packing.
+    </p>
+  </div>
+</section>
+
+<!-- POLICIES -->
+<section id="policies" class="bg-linen py-24 px-12 lg:px-20">
+  <div class="max-w-[1100px] mx-auto">
+    <div class="section-label">Policies</div>
+    <h2 class="font-serif text-4xl font-light text-deep mb-12">Terms &amp; Policies</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 border border-black/10">
+      {[
+        ['Refunds & Returns',      'Due to the personalized nature of our work, we do not offer refunds or returns on completed pieces. Each item is uniquely created from your flowers and cannot be returned once preservation has begun.'],
+        ['Order Cancellation',     'Cancellations before we receive your flowers are eligible for a 75% refund (25% retainer held). Once your flowers are in our hands, no refund can be issued as preservation begins immediately.'],
+        ['Completion Time',        'Our process requires 4–5 months from the date we receive your flowers. We\'ll update you at every key milestone and send a design proof before any resin is poured.'],
+        ['Shipping & Insurance',   'We insure all outbound orders up to $1,000. We are not responsible for damage during transit. Photograph any damage thoroughly and contact us immediately.'],
+        ['Order Alterations',      'Alterations, bouquet recreation, and color correction can be arranged before casting begins. Color correction is available for flowers that have naturally discolored.'],
+        ['Client Satisfaction',    'Your happiness is our priority. Please reach out promptly with any concerns. Open communication is the foundation of every great commission.'],
+      ].map(([title, text]) => (
+        <div class="bg-linen p-8">
+          <h4 class="font-serif text-lg font-normal text-deep mb-4 pb-4 border-b border-sage/20">{title}</h4>
+          <p class="text-[0.88rem] text-mid font-light leading-relaxed">{text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

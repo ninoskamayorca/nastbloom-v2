@@ -1,0 +1,17 @@
+---
+---
+<!-- MARQUEE -->
+<div class="bg-sage py-3.5 overflow-hidden whitespace-nowrap">
+  <div class="marquee-track inline-block">
+    {[
+      'Wedding Bouquet Preservation','Resin Art','Pressed Flower Frames','Botanical Jewelry',
+      'Custom Commissions','Gift Sets','Free Consultation','Ships Nationwide',
+      'Wedding Bouquet Preservation','Resin Art','Pressed Flower Frames','Botanical Jewelry',
+      'Custom Commissions','Gift Sets','Free Consultation','Ships Nationwide',
+    ].map((item, i) => (
+      <span class:list={['mx-10 text-[0.76rem] tracking-[0.2em] uppercase text-white/70', i % 2 === 1 ? '' : '']}>
+        {i % 2 === 0 ? item : <><span class="mx-4 text-white/40 text-[0.45rem] align-middle">◆</span>{item}</>}
+      </span>
+    ))}
+  </div>
+</div>

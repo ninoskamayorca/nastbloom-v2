@@ -1,0 +1,35 @@
+---
+---
+<!-- CARE -->
+<section id="care" class="bg-linen py-20 px-12 lg:px-20">
+  <div class="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
+    {[
+      { label:'Before You Ship', title:'Caring for Your Flowers', items:[
+        ['On the day of your event',       'Handle gently — avoid touching petals and don\'t toss the bouquet if possible.'],
+        ['Do NOT refrigerate or freeze',   'Cold temperatures cause rapid wilting and mold, making preservation impossible.'],
+        ['Keep in fresh water',            'Place stems in water overnight and ship within 4 days of the event.'],
+        ['Already dried flowers?',         'No problem — we preserve previously dried flowers too. Just ensure no mold is present.'],
+      ]},
+      { label:'After Delivery', title:'Caring for Your Resin Piece', items:[
+        ['Wipe with a soft, dry cloth',    'Avoid abrasive cleaners or paper towels which can scratch the resin surface.'],
+        ['Limit direct sunlight',          'Our UV-resistant formula extends vibrancy — but avoid prolonged sun exposure.'],
+        ['Keep away from heat sources',    'Avoid placing near radiators, fireplaces, or in a hot car for extended periods.'],
+        ['Display with pride',             'Your piece is designed to last a lifetime — enjoy it as the heirloom it is.'],
+      ]},
+    ].map(col => (
+      <div>
+        <div class="section-label">{col.label}</div>
+        <h3 class="font-serif text-2xl font-normal text-deep mb-7 pb-4 border-b border-sage/20">{col.title}</h3>
+        {col.items.map(([strong, text]) => (
+          <div class="flex gap-4 mb-5">
+            <span class="text-sage text-[0.85rem] flex-shrink-0 mt-0.5">✦</span>
+            <div class="text-[0.9rem] text-mid font-light leading-loose">
+              <strong class="font-medium text-deep block mb-0.5">{strong}</strong>
+              {text}
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

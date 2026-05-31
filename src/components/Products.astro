@@ -1,0 +1,125 @@
+---
+const { products } = Astro.props;
+const categories = [
+  { key: 'all',       label: 'All' },
+  { key: 'blocks',    label: 'Blocks' },
+  { key: 'specialty', label: 'Specialty' },
+  { key: 'pressed',   label: 'Pressed' },
+  { key: 'letters',   label: 'Letters' },
+  { key: 'addons',    label: 'Add-Ons' },
+  { key: 'custom',    label: 'Custom' },
+];
+
+const emojiMap: Record<string, string> = {
+  blocks: '🌹', specialty: '🌼', pressed: '🌷', letters: '✨', addons: '🌾', custom: '⬛',
+};
+---
+<section id="products" class="bg-cream-mid py-28 px-12 lg:px-20">
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-14 pb-8 border-b border-black/10 gap-6">
+    <div>
+      <div class="section-label">Shop</div>
+      <h2 class="font-serif text-4xl lg:text-5xl font-light text-deep">The Collection</h2>
+    </div>
+    <div class="flex gap-1 flex-wrap" id="catFilters">
+      {categories.map(c => (
+        <button
+          class="cat-btn px-4 py-2 text-[0.78rem] tracking-widest uppercase border border-black/15 text-mid hover:bg-deep hover:text-linen hover:border-deep transition-all"
+          data-cat={c.key}
+          class:list={[c.key === 'all' ? 'bg-deep text-linen border-deep' : '']}
+        >
+          {c.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-black/10 border border-black/10" id="productsGrid">
+    {products.map((p: any) => {
+      const emoji = emojiMap[p.data.category] || '🌸';
+      const savedKey = `nb_pimg_${p.slug}`;
+      return (
+        <div class="product-card bg-linen hover:bg-cream-mid transition-colors relative overflow-hidden group cursor-pointer" data-cat={p.data.category}>
+          <div class="aspect-square flex items-center justify-center bg-cream-mid group-hover:bg-cream-dark transition-colors relative overflow-hidden border-b border-black/10" id={`pimg-${p.slug}`}>
+            {p.data.image ? (
+              <img src={p.data.image} alt={p.data.title} class="w-full h-full object-cover absolute top-0 left-0 product-img-preview" />
+            ) : (
+              <span class="text-5xl product-emoji" data-emoji={emoji}>{emoji}</span>
+            )}
+            {p.data.badge && (
+              <span class="absolute top-4 left-4 z-10 text-[0.68rem] tracking-widest uppercase px-2 py-1 border border-gold/25 text-gold bg-linen/92">{p.data.badge}</span>
+            )}
+            <label for={`pfile-${p.slug}`} class="absolute bottom-2 right-2 z-10 bg-linen/92 border border-black/15 text-soft text-[0.62rem] tracking-widest uppercase px-2.5 py-1 cursor-pointer hover:bg-sage hover:text-white hover:border-sage transition-all opacity-0 group-hover:opacity-100">
+              + Photo
+            </label>
+            <input type="file" accept="image/*" id={`pfile-${p.slug}`} data-slug={p.slug} class="hidden product-upload-input" />
+          </div>
+          <div class="p-6">
+            <h3 class="font-serif text-lg font-normal text-deep mb-1">{p.data.title}</h3>
+            <p class="text-[0.85rem] text-soft font-light leading-relaxed mb-5">{p.data.description}</p>
+            <div class="flex items-center justify-between border-t border-black/10 pt-4">
+              <span class="font-serif text-xl font-normal text-deep">${p.data.price}</span>
+              <button
+                class="w-8 h-8 border border-black/15 flex items-center justify-center text-mid hover:bg-sage hover:text-white hover:border-sage transition-all text-lg"
+                onclick={`addToCart('${p.slug}','${p.data.title}',${p.data.price},'${emoji}')`}
+              >+</button>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  // Category filter
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.classList.remove('bg-deep','text-linen','border-deep');
+      });
+      this.classList.add('bg-deep','text-linen','border-deep');
+      const cat = this.dataset.cat;
+      document.querySelectorAll('.product-card').forEach(card => {
+        const el = card as HTMLElement;
+        el.style.display = (cat === 'all' || el.dataset.cat === cat) ? '' : 'none';
+      });
+    });
+  });
+
+  // Product photo upload with localStorage
+  document.querySelectorAll('.product-upload-input').forEach(input => {
+    const inp = input as HTMLInputElement;
+    const slug = inp.dataset.slug;
+    if (!slug) return;
+
+    // Restore saved photo
+    const saved = localStorage.getItem(`nb_pimg_${slug}`);
+    if (saved) applyProductImg(slug, saved);
+
+    inp.addEventListener('change', function() {
+      const f = this.files?.[0]; if (!f) return;
+      const r = new FileReader();
+      r.onload = e => {
+        const src = e.target?.result as string;
+        try { localStorage.setItem(`nb_pimg_${slug}`, src); } catch(err) {}
+        applyProductImg(slug!, src);
+        window.showToast?.('📷 Photo saved!');
+      };
+      r.readAsDataURL(f);
+    });
+  });
+
+  function applyProductImg(slug: string, src: string) {
+    const wrap = document.getElementById(`pimg-${slug}`);
+    if (!wrap) return;
+    let img = wrap.querySelector('.product-img-preview') as HTMLImageElement;
+    if (!img) {
+      img = document.createElement('img');
+      img.className = 'w-full h-full object-cover absolute top-0 left-0 product-img-preview';
+      wrap.prepend(img);
+    }
+    img.src = src;
+    const emoji = wrap.querySelector('.product-emoji') as HTMLElement;
+    if (emoji) emoji.style.display = 'none';
+  }
+</script>

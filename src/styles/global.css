@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+}
+
+@layer components {
+  .section-label {
+    @apply flex items-center gap-4 text-[0.76rem] font-normal tracking-[0.22em] uppercase text-sage mb-5;
+  }
+  .section-label::after {
+    content: '';
+    @apply flex-1 max-w-[36px] h-px bg-sage opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-sage text-white text-[0.82rem] tracking-widest uppercase px-8 py-4 hover:bg-sage/80 transition-colors inline-block;
+  }
+  .btn-outline {
+    @apply border border-black/15 text-mid text-[0.82rem] tracking-widest uppercase px-6 py-4 hover:border-sage hover:text-sage transition-all inline-flex items-center gap-2;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+  }
+  .faq-toggle::before,
+  .faq-toggle::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    transition: all 0.3s;
+  }
+  .faq-toggle::before { width: 12px; height: 1px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .faq-toggle::after  { width: 1px; height: 12px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .faq-item.open .faq-toggle::after { opacity: 0; transform: translate(-50%,-50%) rotate(90deg); }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-track { animation: marquee 32s linear infinite; }
+}

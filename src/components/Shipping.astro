@@ -1,0 +1,35 @@
+---
+---
+<!-- SHIPPING -->
+<section id="shipping" class="bg-cream-dark py-24 px-12 lg:px-20">
+  <div class="section-label">Shipping</div>
+  <h2 class="font-serif text-4xl font-light text-deep mb-4">Sending Your Flowers</h2>
+  <p class="text-[0.95rem] text-mid font-light leading-relaxed max-w-xl mb-12">Getting your flowers to us in perfect condition is the most important step. Follow these guidelines and your blooms will arrive ready to preserve.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 border border-black/10 mb-4">
+    {[
+      { icon:'📦', title:'Packaging', items:['Wrap stems in damp paper towel','Seal in a zip-lock bag to retain moisture','Wrap bouquet in tissue paper','Use a sturdy box with padding on all sides','Include your name and order number'] },
+      { icon:'🚚', title:'Shipping Methods', items:['Overnight or 2-day shipping strongly recommended','USPS Priority, FedEx, or UPS all accepted','Ship Monday–Wednesday to avoid weekends','Local drop-off available in Oviedo, FL'] },
+      { icon:'📅', title:'Timing', items:['Ship within 4 days of your event','The fresher your flowers arrive, the better','We begin drying immediately upon receipt'] },
+    ].map(card => (
+      <div class="bg-linen p-8">
+        <div class="text-2xl mb-4">{card.icon}</div>
+        <h4 class="font-serif text-xl font-normal text-deep mb-4">{card.title}</h4>
+        <ul class="list-none flex flex-col gap-2">
+          {card.items.map(item => (
+            <li class="flex gap-3 text-[0.88rem] text-mid font-light leading-relaxed">
+              <span class="text-sage/70 flex-shrink-0">—</span>{item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <div class="border border-sage/20 bg-sage-faint p-6 flex gap-4 items-start">
+    <span class="text-lg flex-shrink-0">⚠</span>
+    <p class="text-[0.88rem] text-mid font-light leading-relaxed">
+      <strong class="font-medium text-deep">Important:</strong> Do not refrigerate or freeze your flowers. Cold storage causes accelerated wilting and mold. Keep blooms at room temperature in water until packing.
+    </p>
+  </div>
+</section>

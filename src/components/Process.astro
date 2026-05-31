@@ -1,0 +1,66 @@
+---
+// Process section — 5-step visual + detail + timeline
+---
+<section id="process" class="bg-cream-mid py-28 px-12 lg:px-20">
+  <div class="text-center mb-16">
+    <div class="section-label justify-center">Our Process</div>
+    <h2 class="font-serif text-4xl lg:text-5xl font-light text-deep">Thoughtful. Personal. Timeless.</h2>
+    <p class="font-serif italic text-sage text-xl mt-3">From your special day to your forever keepsake</p>
+  </div>
+
+  <!-- 5-step icons -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10 relative mb-16">
+    <div class="hidden lg:block absolute top-[26px] left-[10%] right-[10%] h-px bg-gradient-to-r from-sage/10 via-sage-light/40 to-sage/10"></div>
+    {[
+      { icon:'✉️', num:'01. Inquire',          title:'Reach Out',     desc:'Tell us about your special day and your vision for your preserved piece.' },
+      { icon:'🌿', num:'02. Send Your Blooms',  title:'Ship or Drop Off', desc:"We'll guide you on how to send your flowers safely to us." },
+      { icon:'🔬', num:'03. Preserve',          title:'Expert Drying', desc:'We carefully preserve your blooms using professional techniques.' },
+      { icon:'✨', num:'04. Create',            title:'Handcraft',     desc:'Your custom piece is handcrafted with love and attention to every detail.' },
+      { icon:'🎁', num:'05. Treasure',          title:'Forever Yours', desc:'Receive your timeless keepsake and cherish it forever.' },
+    ].map(step => (
+      <div class="flex flex-col items-center text-center relative z-10">
+        <div class="w-14 h-14 rounded-full border border-sage/15 bg-linen flex items-center justify-center text-2xl mb-5 shadow-[0_2px_12px_rgba(100,140,90,0.1)]">{step.icon}</div>
+        <div class="text-[0.76rem] tracking-widest uppercase text-sage mb-1.5">{step.num}</div>
+        <div class="text-[0.86rem] font-medium uppercase tracking-wide text-deep mb-2">{step.title}</div>
+        <div class="text-[0.86rem] text-mid font-light leading-relaxed">{step.desc}</div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Detail grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 border border-black/10 mb-px">
+    {[
+      { num:'01', title:'Choose & Order', bullets:['Choose your products and sizes','Select your expected flower send date','Pay in full or ask about our payment plan','Receive confirmation with shipping instructions'] },
+      { num:'02', title:'Send Your Flowers', bullets:['Avoid refrigerating or freezing flowers','Handle gently — avoid touching petals','Ship via USPS, FedEx, or UPS overnight','Local drop-off available in Oviedo, FL'] },
+      { num:'03', title:'We Handle the Rest', bullets:['We photograph everything upon receipt','Design proof sent before any casting','Nothing poured without your sign-off','Polished, boxed & insured for return'] },
+    ].map(step => (
+      <div class="bg-linen p-10">
+        <div class="font-serif text-6xl font-light text-sage/20 leading-none mb-6">{step.num}</div>
+        <h3 class="font-serif text-xl font-normal text-deep mb-4">{step.title}</h3>
+        <ul class="list-none flex flex-col gap-3">
+          {step.bullets.map(b => (
+            <li class="flex gap-3 items-start text-[0.88rem] text-mid font-light leading-relaxed">
+              <span class="text-sage text-[0.55rem] mt-1.5 flex-shrink-0">✦</span>
+              {b}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <!-- Timeline -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-sage/15 border border-sage/15">
+    {[
+      { when:'Upon receipt',    what:'We email photos confirming arrival & condition' },
+      { when:'~2 months in',   what:'Design proof sent for your approval' },
+      { when:'~3–4 months in', what:'Casting complete — shipping address confirmed' },
+      { when:'~4–5 months',    what:'Polished, packaged & shipped home to you' },
+    ].map(tl => (
+      <div class="bg-sage-faint px-7 py-6">
+        <div class="text-[0.76rem] tracking-widest uppercase text-sage mb-2">{tl.when}</div>
+        <div class="text-[0.88rem] text-mid font-light leading-relaxed">{tl.what}</div>
+      </div>
+    ))}
+  </div>
+</section>

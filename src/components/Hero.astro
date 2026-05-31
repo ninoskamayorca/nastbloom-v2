@@ -1,0 +1,95 @@
+---
+const { headline, subtext, heroImage } = Astro.props;
+---
+<section id="home" class="pt-[72px] min-h-screen grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
+  <!-- Left -->
+  <div class="bg-[#e8ddd0] flex flex-col justify-center px-12 lg:px-20 py-24 relative">
+    <div class="after:content-[''] after:absolute after:bottom-12 after:left-20 after:w-10 after:h-px after:bg-gold after:opacity-50"></div>
+    <div class="flex items-center gap-3 text-[0.78rem] tracking-[0.24em] uppercase text-gold mb-8">
+      <span class="w-6 h-px bg-gold opacity-70 block"></span>
+      Timeless Beauty. Made to Last.
+    </div>
+    <h1 class="font-serif text-5xl lg:text-6xl font-light leading-[1.05] text-deep mb-7">
+      {headline.includes('blooms') ? (
+        <Fragment set:html={headline.replace('blooms.', '<em class="not-italic text-gold">blooms.</em>')} />
+      ) : headline}
+    </h1>
+    <p class="text-[0.96rem] leading-relaxed text-mid/80 max-w-sm font-light mb-12">{subtext}</p>
+    <div class="flex gap-4 flex-wrap">
+      <a href="#contact" class="btn-primary">Inquire Now</a>
+      <a href="#process" class="btn-outline">Our Process <span class="transition-transform group-hover:translate-x-1">→</span></a>
+    </div>
+  </div>
+
+  <!-- Right -->
+  <div class="bg-cream-mid flex flex-col items-center justify-center p-16 relative">
+    <div class="w-full max-w-[440px] aspect-[3/4] relative">
+      <!-- Image frame -->
+      <div class="w-full h-full relative overflow-hidden shadow-[0_8px_60px_rgba(100,140,90,0.12)] group" id="heroFrame">
+        {heroImage ? (
+          <img src={heroImage} alt="Featured preserved flowers" class="w-full h-full object-cover" id="heroImg" />
+        ) : (
+          <div class="w-full h-full bg-gradient-to-br from-sage-pale to-cream-dark flex flex-col items-center justify-center gap-4" id="heroPlaceholder">
+            <span class="text-6xl opacity-25">🌹</span>
+            <span class="text-[0.75rem] tracking-widest uppercase text-faint">Add hero photo</span>
+          </div>
+        )}
+        <label for="heroImgInput" class="absolute bottom-3 right-3 bg-linen/92 border border-black/15 text-soft text-[0.62rem] tracking-widest uppercase px-3 py-1.5 cursor-pointer hover:bg-sage hover:text-white hover:border-sage transition-all opacity-0 group-hover:opacity-100">
+          + Photo
+        </label>
+        <input type="file" accept="image/*" id="heroImgInput" class="hidden" />
+      </div>
+
+      <!-- Ornament -->
+      <div class="absolute -top-4 -right-4 w-20 h-20 border border-gold/25 rounded-full pointer-events-none"></div>
+
+      <!-- Stats -->
+      <div class="absolute -bottom-4 -left-6 bg-white border border-black/10 shadow-md grid grid-cols-2">
+        <div class="px-5 py-4 border-r border-b border-black/10">
+          <div class="font-serif text-2xl font-normal text-deep leading-none">100%</div>
+          <div class="text-[0.72rem] tracking-widest uppercase text-soft mt-1">Handmade</div>
+        </div>
+        <div class="px-5 py-4 border-b border-black/10">
+          <div class="font-serif text-2xl font-normal text-deep leading-none">UV+</div>
+          <div class="text-[0.72rem] tracking-widest uppercase text-soft mt-1">Protected</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Hero image upload with localStorage
+  const heroInput = document.getElementById('heroImgInput');
+  if (heroInput) {
+    // Restore saved hero image
+    const saved = localStorage.getItem('nb_heroImg');
+    if (saved) applyHeroImg(saved);
+
+    heroInput.addEventListener('change', function() {
+      const f = this.files[0]; if (!f) return;
+      const r = new FileReader();
+      r.onload = e => {
+        try { localStorage.setItem('nb_heroImg', e.target.result); } catch(err) {}
+        applyHeroImg(e.target.result);
+        window.showToast && window.showToast('📷 Hero image saved!');
+      };
+      r.readAsDataURL(f);
+    });
+  }
+
+  function applyHeroImg(src) {
+    const frame = document.getElementById('heroFrame');
+    if (!frame) return;
+    const placeholder = document.getElementById('heroPlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
+    let img = document.getElementById('heroImg');
+    if (!img) {
+      img = document.createElement('img');
+      img.id = 'heroImg';
+      img.className = 'w-full h-full object-cover absolute top-0 left-0';
+      frame.prepend(img);
+    }
+    img.src = src;
+  }
+</script>

@@ -1,0 +1,18 @@
+---
+const { items } = Astro.props;
+---
+<section id="testimonials" class="bg-sage py-20 px-12 lg:px-20">
+  <div class="text-center mb-12">
+    <div class="section-label justify-center" style="color:rgba(255,255,255,0.6)">What Our Clients Say</div>
+    <h2 class="font-serif text-3xl lg:text-4xl font-light text-white">Words from our brides</h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10">
+    {items.map((t: any) => (
+      <div class="bg-white/8 p-10 backdrop-blur-sm">
+        <div class="font-serif text-5xl text-white/20 leading-none mb-4">"</div>
+        <p class="font-serif italic text-white/90 text-lg leading-relaxed font-light mb-6">{t.data.quote}</p>
+        <span class="text-[0.76rem] tracking-widest uppercase text-white/50">— {t.data.author}</span>
+      </div>
+    ))}
+  </div>
+</section>

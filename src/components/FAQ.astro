@@ -1,0 +1,67 @@
+---
+const { items } = Astro.props;
+const tabs = [
+  { key: 'all',      label: 'All' },
+  { key: 'flowers',  label: 'Flowers' },
+  { key: 'shipping', label: 'Shipping' },
+  { key: 'process',  label: 'Process' },
+  { key: 'care',     label: 'After Care' },
+];
+---
+<section id="faq" class="bg-cream-mid py-28 px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-24 items-start">
+  <div class="lg:sticky lg:top-20">
+    <div class="section-label">FAQ</div>
+    <h2 class="font-serif text-4xl font-light text-deep mb-6">Questions<br/>Answered</h2>
+    <p class="text-[0.93rem] text-mid font-light leading-relaxed mb-8">Everything you need to know before entrusting us with your blooms.</p>
+    <div class="flex flex-wrap border border-black/15" id="faqTabs">
+      {tabs.map(t => (
+        <button
+          class="faq-tab px-4 py-2 text-[0.76rem] tracking-widest uppercase text-mid border-r border-black/15 last:border-r-0 hover:bg-sage hover:text-white transition-all"
+          data-tab={t.key}
+          class:list={[t.key === 'all' ? 'bg-sage text-white' : '']}
+        >
+          {t.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div id="faqList">
+    {items.map((item: any) => (
+      <div class="faq-item border-b border-black/10" data-cat={item.data.category}>
+        <button
+          class="faq-question w-full flex items-center justify-between py-6 gap-6 text-left cursor-pointer"
+          onclick="toggleFaq(this)"
+        >
+          <h4 class="font-serif text-lg font-normal text-deep flex-1">{item.data.question}</h4>
+          <div class="faq-toggle w-6 h-6 relative flex-shrink-0 text-mid"></div>
+        </button>
+        <div class="faq-answer">
+          <p class="text-[0.93rem] text-mid leading-relaxed font-light pb-6 pr-8">{item.data.answer}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  function toggleFaq(btn: HTMLElement) {
+    const item = btn.closest('.faq-item') as HTMLElement;
+    item.classList.toggle('open');
+  }
+  (window as any).toggleFaq = toggleFaq;
+
+  document.querySelectorAll('.faq-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.faq-tab').forEach(t => {
+        t.classList.remove('bg-sage','text-white');
+      });
+      this.classList.add('bg-sage','text-white');
+      const key = (this as HTMLElement).dataset.tab;
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const el = item as HTMLElement;
+        el.style.display = (key === 'all' || el.dataset.cat === key) ? '' : 'none';
+      });
+    });
+  });
+</script>

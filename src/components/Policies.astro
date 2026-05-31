@@ -1,0 +1,24 @@
+---
+---
+<!-- POLICIES -->
+<section id="policies" class="bg-linen py-24 px-12 lg:px-20">
+  <div class="max-w-[1100px] mx-auto">
+    <div class="section-label">Policies</div>
+    <h2 class="font-serif text-4xl font-light text-deep mb-12">Terms &amp; Policies</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 border border-black/10">
+      {[
+        ['Refunds & Returns',      'Due to the personalized nature of our work, we do not offer refunds or returns on completed pieces. Each item is uniquely created from your flowers and cannot be returned once preservation has begun.'],
+        ['Order Cancellation',     'Cancellations before we receive your flowers are eligible for a 75% refund (25% retainer held). Once your flowers are in our hands, no refund can be issued as preservation begins immediately.'],
+        ['Completion Time',        'Our process requires 4–5 months from the date we receive your flowers. We\'ll update you at every key milestone and send a design proof before any resin is poured.'],
+        ['Shipping & Insurance',   'We insure all outbound orders up to $1,000. We are not responsible for damage during transit. Photograph any damage thoroughly and contact us immediately.'],
+        ['Order Alterations',      'Alterations, bouquet recreation, and color correction can be arranged before casting begins. Color correction is available for flowers that have naturally discolored.'],
+        ['Client Satisfaction',    'Your happiness is our priority. Please reach out promptly with any concerns. Open communication is the foundation of every great commission.'],
+      ].map(([title, text]) => (
+        <div class="bg-linen p-8">
+          <h4 class="font-serif text-lg font-normal text-deep mb-4 pb-4 border-b border-sage/20">{title}</h4>
+          <p class="text-[0.88rem] text-mid font-light leading-relaxed">{text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

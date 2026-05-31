@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: ninoskamayorca/nastbloom-v2
+  name: git-gateway
   branch: main
 
 # Enable local development with: npx decap-server
